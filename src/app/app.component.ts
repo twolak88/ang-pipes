@@ -32,6 +32,7 @@ export class AppComponent {
       started: new Date(2021, 1, 20)
     }
   ];
+  filteredStatus: string = '';
 
   getStatusClasses(server: {instanceType: string, name: string, status: string, started: Date}) {
     return {
