@@ -17,24 +17,26 @@ export class AppComponent implements OnInit{
       instanceType: 'large',
       name: 'User Database',
       status: 'stable',
-      started: new Date(2021, 1, 20)
+      started: new Date(2021, 1, 1)
     },
     {
       instanceType: 'small',
       name: 'Development Server',
       status: 'offline',
-      started: new Date(2021, 1, 20)
+      started: new Date(2021, 0, 22)
     },
     {
       instanceType: 'small',
       name: 'Testing Environment Server',
       status: 'stable',
-      started: new Date(2021, 1, 20)
+      started: new Date(2020, 11, 12)
     }
   ];
   filteredStatus: string = '';
   filteredObjects = [];
-  filteredObject: string = 'all';
+  sortObjects = [];
+  defaultFilteredObject: string = 'all';
+  defaultSortObject: String = 'name';
   appStatus = new Promise(
     (resolve, reject) => {
       setTimeout(() => {
@@ -47,6 +49,7 @@ export class AppComponent implements OnInit{
     this.filteredObjects = Object.keys(this.servers[0]);
     this.filteredObjects.splice(this.filteredObjects.indexOf('started'), 1);
     this.filteredObjects.push('all');
+    this.sortObjects = Object.keys(this.servers[0]);
   }
 
   getStatusClasses(server: {instanceType: string, name: string, status: string, started: Date}) {
@@ -62,7 +65,7 @@ export class AppComponent implements OnInit{
       instanceType: 'small',
       name: 'Test server',
       status: 'stable',
-      started: new Date(2021, 1, 20)
+      started: new Date(2020, 10, 20)
     });
   }
 }

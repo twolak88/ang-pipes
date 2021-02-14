@@ -11,10 +11,20 @@
         <div class="col-xs-4">
           <select
             class="form-control"
-            [ngModel]="filteredObject"
+            [ngModel]="defaultFilteredObject"
             #filterBy>
             <option [value]="item" *ngFor="let item of filteredObjects">{{ item }}</option>
         </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12" style="margin-top: 10px;">
+          <select
+            class="form-control"
+            [ngModel]="defaultSortObject"
+            #sortBy>
+            <option [value]="item" *ngFor="let item of sortObjects">{{ item }}</option>
+          </select>
         </div>
       </div>
       <br>
@@ -26,14 +36,14 @@
       <ul class="list-group">
         <li
           class="list-group-item"
-          *ngFor="let server of servers | filter: filteredStatus: filterBy.value"
+          *ngFor="let server of servers | filter: filteredStatus: filterBy.value | sort: sortBy.value"
           [ngClass]="getStatusClasses(server)">
           <span
             class="badge">
             {{ server.status }}
           </span>
           <strong>{{ server.name | shorten: 15: '...' }}</strong>
-          {{ server.instanceType | uppercase }} |
+          {{ server.instanceType | uppercase | reverse}} |
           {{ server.started | date:'fullDate' | uppercase }}
         </li>
       </ul>
