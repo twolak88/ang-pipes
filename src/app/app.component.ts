@@ -35,6 +35,13 @@ export class AppComponent implements OnInit{
   filteredStatus: string = '';
   filteredObjects = [];
   filteredObject: string = 'all';
+  appStatus = new Promise(
+    (resolve, reject) => {
+      setTimeout(() => {
+        resolve('stable');
+      }, 2000);
+    }
+  );
 
   ngOnInit(): void {
     this.filteredObjects = Object.keys(this.servers[0]);
