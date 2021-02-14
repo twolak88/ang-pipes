@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   servers = [
     {
       instanceType: 'medium',
@@ -33,6 +33,14 @@ export class AppComponent {
     }
   ];
   filteredStatus: string = '';
+  filteredObjects = [];
+  filteredObject: string = 'all';
+
+  ngOnInit(): void {
+    this.filteredObjects = Object.keys(this.servers[0]);
+    this.filteredObjects.splice(this.filteredObjects.indexOf('started'), 1);
+    this.filteredObjects.push('all');
+  }
 
   getStatusClasses(server: {instanceType: string, name: string, status: string, started: Date}) {
     return {
@@ -40,5 +48,14 @@ export class AppComponent {
       'list-group-item-warning': server.status === 'offline',
       'list-group-item-danger': server.status === 'critical'
     };
+  }
+
+  onAddServer() {
+    this.servers.push({
+      instanceType: 'small',
+      name: 'Test server',
+      status: 'stable',
+      started: new Date(2021, 1, 20)
+    });
   }
 }

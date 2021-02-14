@@ -1,7 +1,9 @@
+import { stringify } from '@angular/compiler/src/util';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filter'
+  name: 'filter',
+  pure: false
 })
 export class FilterPipe implements PipeTransform {
 
@@ -11,8 +13,18 @@ export class FilterPipe implements PipeTransform {
     }
     const resultArray = [];
     for (const item of <[]>value) {
-      if((<string>item[propName]).startsWith(filterString)) {
-        resultArray.push(item);
+      if (propName === 'all') {
+        for (let key of Object.keys(item)) {
+          let prop = item[key];
+          if (typeof prop === "string" && (<string>prop).startsWith(filterString)
+            && !resultArray.includes(item)) {
+            resultArray.push(item);
+          }
+        }
+      } else {
+        if((<string>item[propName]).startsWith(filterString)) {
+          resultArray.push(item);
+        }
       }
     }
     return resultArray;

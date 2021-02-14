@@ -1,15 +1,29 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <input
-        type="text"
-        class="form-control"
-        [(ngModel)]="filteredStatus">
+      <div class="row">
+        <div class="col-xs-8">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="filteredStatus">
+        </div>
+        <div class="col-xs-4">
+          <select
+            class="form-control"
+            [ngModel]="filteredObject"
+            #filterBy>
+            <option [value]="item" *ngFor="let item of filteredObjects">{{ item }}</option>
+        </select>
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-primary" (click)="onAddServer()">Add Server</button>
       <hr>
       <ul class="list-group">
         <li
           class="list-group-item"
-          *ngFor="let server of servers | filter: filteredStatus: 'status'"
+          *ngFor="let server of servers | filter: filteredStatus: filterBy.value"
           [ngClass]="getStatusClasses(server)">
           <span
             class="badge">
